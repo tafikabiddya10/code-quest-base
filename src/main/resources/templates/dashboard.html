@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: htmlHead('Dashboard')}"></head>
+<body>
+    <div th:replace="~{fragments/layout :: navbar}"></div>
+
+    <div class="cq-container">
+        <div th:replace="~{fragments/layout :: flashMessages}"></div>
+
+        <div style="margin-bottom:2rem;">
+            <h1 style="font-size:2rem; font-weight:800; color:#fff;">Welcome, <span th:text="${user != null ? user.name : 'Explorer'}">Explorer</span>! 🚀</h1>
+            <p style="color:var(--text-muted);">
+                Signed in as <strong th:text="${user != null ? user.role : 'USER'}">USER</strong><span th:if="${user != null}">
+                &bull; Daily Streak: <span style="color:var(--accent); font-weight:700;" th:text="${user.loginStreak}">1</span> 🔥</span>
+            </p>
+        </div>
+
+        <div class="cq-card" style="text-align:center; padding:3rem 2rem;">
+            <div style="font-size:3rem; margin-bottom:1rem;">🏗️</div>
+            <div class="cq-card-title" style="font-size:1.6rem;">Feature Modules Coming Soon</div>
+            <div class="cq-card-sub" style="max-width:640px; margin:0 auto 1.5rem auto;">
+                This is a placeholder dashboard. All feature modules were removed from the
+                codebase and are <strong>pending implementation in upcoming sprints</strong>.
+                The authentication backbone, database foundation and shared layout are live.
+            </div>
+            <div class="cq-grid" style="max-width:900px; margin:0 auto;">
+                <div class="cq-card">
+                    <div class="cq-card-title">🏰 Creator Studio (F1)</div>
+                    <div class="cq-card-sub">⬜ Pending — upcoming sprint (Hasin)</div>
+                </div>
+                <div class="cq-card">
+                    <div class="cq-card-title">👥 Classrooms (F2)</div>
+                    <div class="cq-card-sub">⬜ Pending — upcoming sprint (Hasin)</div>
+                </div>
+                <div class="cq-card">
+                    <div class="cq-card-title">💡 Smart Hints (F3)</div>
+                    <div class="cq-card-sub">⬜ Pending — upcoming sprint (Adnan)</div>
+                </div>
+                <div class="cq-card">
+                    <div class="cq-card-title">💬 Discussion Board (F4)</div>
+                    <div class="cq-card-sub">⬜ Pending — upcoming sprint (Tafika)</div>
+                </div>
+                <div class="cq-card">
+                    <div class="cq-card-title">📈 Profile &amp; Play (F5)</div>
+                    <div class="cq-card-sub">⬜ Pending — upcoming sprint (Tanvir)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="~{fragments/layout :: footer}"></div>
+</body>
+</html>
