@@ -1,9 +1,9 @@
 # Tafika — Feature 4: Level Discussion Board
 
-**Sprint:** 2  
+**Sprint:** 1  
 **Feature:** F4 — Level Discussion Board
 
-**Status:** ⏳ **Pending (Sprint 2)**
+**Status:** ⏳ **Pending (Sprint 1)**
 
 ---
 
