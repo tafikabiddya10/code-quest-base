@@ -15,6 +15,12 @@
     --text-muted: #9ca3af;
     --border-color: #2e384d;
     --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    --bg-ombre: linear-gradient(180deg,
+            #0f141c 0%,
+            #131a2b 30%,
+            #1e1b4b 62%,
+            #2c1d5c 82%,
+            #3b2367 100%);
 }
 
 * {
@@ -23,8 +29,19 @@
     padding: 0;
 }
 
+html {
+    height: 100%;
+}
+
 body {
+    /* Ombre gradient: deep slate -> indigo -> soft violet.
+       Fixed attachment keeps it filling the full viewport height even on
+       long pages; the darkest tone stays the fallback color. */
     background-color: var(--bg-dark);
+    background-image: var(--bg-ombre);
+    background-attachment: fixed;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
     color: var(--text-main);
     font-family: var(--font-family);
     min-height: 100vh;
