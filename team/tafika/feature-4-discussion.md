@@ -1,14 +1,9 @@
-﻿> âš ï¸ **STATUS â€” PENDING / NOT BUILT.** This feature was removed from the codebase
-> during the backbone strip-down and is **pending implementation in Sprint 2**.
-> The document below is kept as a historical blueprint for the rebuild; none of
-> the files or routes it describes exist in the current codebase.
-
-# Tafika â€” Feature 4: Level Discussion Board
+# Tafika — Feature 4: Level Discussion Board
 
 **Sprint:** 2  
-**Feature:** F4 â€” Level Discussion Board
+**Feature:** F4 — Level Discussion Board
 
-**Status:** âœ… **COMPLETE** (implemented November 12, 2026)
+**Status:** ⏳ **Pending (Sprint 2)**
 
 ---
 
@@ -33,7 +28,7 @@ Rules enforced by the server:
 
 ## 2. Files
 
-### New (all owned by F4)
+### New (all owned by F4) — *(Pending implementation)*
 
 | File | Purpose |
 |---|---|
@@ -42,20 +37,20 @@ Rules enforced by the server:
 | `src/main/resources/templates/discussion/fragments.html` | `commentSection` (student) and `commentModeration` (teacher). |
 | `src/main/resources/templates/discussion/index.html` | F4 "Discussion Boards" castle list. |
 | `src/main/resources/templates/discussion/level.html` | F4 verification page for one castle's board. |
-| `src/test/java/com/codequest/discussion/DiscussionFeatureTests.java` | 8 tests: posting, validation, access, moderation, rendering. |
+| `src/test/java/com/codequest/discussion/DiscussionFeatureTests.java` | Planned: 8 tests covering posting, validation, access, moderation, rendering. |
 
-### Existing files touched (small, clearly marked)
+### Existing files to touch (small, clearly marked)
 
 | File | Change |
 |---|---|
-| `src/main/java/com/codequest/studio/StudioController.java` | Injects `DiscussionService`; adds `comments` to the level-design model (3 lines). |
-| `src/main/resources/templates/studio/level-design.html` | Passes `level` and `comments` to `commentModeration`. |
-| `src/main/resources/templates/profile/play.html` | Left the `commentSection` include with a comment telling F5 which model attributes to pass. |
-| `src/main/resources/templates/student/home.html` | F4 card now links to `/play/discussion`. |
-| `src/main/resources/static/css/app.css` | Added `.cq-comment-*` styles. |
+| `src/main/java/com/codequest/studio/StudioController.java` | Inject `DiscussionService`; add `comments` to the level-design model (3 lines). |
+| `src/main/resources/templates/studio/level-design.html` | Pass `level` and `comments` to `commentModeration`. |
+| `src/main/resources/templates/profile/play.html` | Leave the `commentSection` include with a comment telling F5 which model attributes to pass. |
+| `src/main/resources/templates/student/home.html` | F4 card links to `/play/discussion`. |
+| `src/main/resources/static/css/app.css` | Add `.cq-comment-*` styles. |
 
-No entity or repository change was needed â€” `Comment` (`table "comments"`, column `body`)
-and `CommentRepository` were already built in Phase 1.
+No entity or repository change is needed — `Comment` (`table "comments"`, column `body`)
+and `CommentRepository` already exist in the Phase 1 foundation.
 
 ---
 
@@ -69,15 +64,15 @@ and `CommentRepository` were already built in Phase 1.
 | POST | `/studio/levels/{levelId}/comments` | TEACHER (owner) | Post a comment as the teacher. |
 | POST | `/studio/comments/{commentId}/delete` | TEACHER (owner) | Delete a comment (moderation). |
 
-`/play/**` is already `ROLE_STUDENT` and `/studio/**` is `ROLE_TEACHER` in
-`SecurityConfig`, so no security change was needed.
+These paths require login: `/play/**` for students and `/studio/**` for teachers
+(enforced by `SecurityConfig`), so no security change is needed.
 
 ---
 
 ## 4. How to run and verify (checklist)
 
 ```bash
-cd /home/adnan/Desktop/Project
+cd <project-root>
 mvn test
 mvn spring-boot:run -Dspring-boot.run.profiles=test
 ```
@@ -85,33 +80,21 @@ mvn spring-boot:run -Dspring-boot.run.profiles=test
 ### A. Student posts
 
 1. Log in as `student@codequest.com` / `password123`.
-2. Dashboard â†’ **ðŸ’¬ Level Discussion** card â†’ **Open Discussion Boards**.
-3. Open **Tower of Spring MVC** â†’ **Discussion Board**.
-4. Type a comment, click **Post Comment** â†’ green banner, comment appears with
+2. Dashboard → **💬 Level Discussion** card → **Open Discussion Boards**.
+3. Open **Tower of Spring MVC** → **Discussion Board**.
+4. Type a comment, click **Post Comment** → green banner, comment appears with
    your name, `STUDENT` badge and time.
-5. Submit an empty comment â†’ browser blocks it; submitting only spaces shows
+5. Submit an empty comment → browser blocks it; submitting only spaces shows
    "Comment cannot be empty."
 
 ### B. Teacher moderates
 
 1. Log in as `teacher@codequest.com` / `password123`.
-2. Creator Studio â†’ **Tower of Spring MVC** â†’ **Design Castle**.
-3. The **ðŸ’¬ Discussion Moderation** panel lists the student's comment.
-4. Post a reply with **Post as teacher** â†’ it appears on the student board too.
-5. Click **Ã— Delete** on a comment â†’ confirm â†’ it disappears from both pages.
-6. Open another teacher's castle (create one if needed) â†’ they cannot moderate it.
-
-### C. Automated checks
-
-`mvn test` runs 8 F4 tests, including:
-
-- enrolled student can post (body trimmed),
-- empty / over-long comments rejected,
-- outsider student rejected,
-- teacher can post and delete on their own castle,
-- another teacher cannot post or delete,
-- discussion index, level board and moderation panel render,
-- POST endpoints store/delete and redirect correctly.
+2. Creator Studio → **Tower of Spring MVC** → **Design Castle**.
+3. The **💬 Discussion Moderation** panel lists the student's comment.
+4. Post a reply with **Post as teacher** → it appears on the student board too.
+5. Click **× Delete** on a comment → confirm → it disappears from both pages.
+6. Open another teacher's castle (create one if needed) → they cannot moderate it.
 
 ---
 

@@ -1,17 +1,12 @@
-﻿> âš ï¸ **STATUS â€” PENDING / NOT BUILT.** This feature was removed from the codebase
-> during the backbone strip-down and is **pending implementation in Sprint 2**.
-> The document below is kept as a historical blueprint for the rebuild; none of
-> the files or routes it describes exist in the current codebase.
-
-# Tanvir â€” Feature 5: Student Profile, Progress & Castle Play
+# Tanvir — Feature 5: Student Profile, Progress & Castle Play
 
 **Sprint:** 2  
-**Feature:** F5 â€” Student Profile, Learning Progress & Student Play Page
+**Feature:** F5 — Student Profile, Learning Progress & Student Play Page
 
 **Assigned Feature:**
 - **F5: Student Profile & Learning Progress + Student Play Page**
 
-**Status:** âœ… COMPLETE â€” 14 automated tests in `PlayFeatureTests`.
+**Status:** ⏳ **Pending (Sprint 2)**
 
 ---
 
@@ -42,7 +37,7 @@ Powers the core student gameplay loop:
 
 ---
 
-## 2. File Ownership Map
+## 2. File Ownership Map — *(Pending implementation)*
 
 - **Controllers & Services:**
   - `com.codequest.profile.PlayController`
@@ -57,14 +52,14 @@ Powers the core student gameplay loop:
   - `com.codequest.profile.view.LevelRow`
   - `com.codequest.profile.view.ProfileSummary`
 - **Thymeleaf Templates:**
-  - [`templates/profile/play.html`](file:///home/adnan/Desktop/Project/src/main/resources/templates/profile/play.html)
-  - [`templates/profile/top.html`](file:///home/adnan/Desktop/Project/src/main/resources/templates/profile/top.html)
-  - [`templates/profile/profile.html`](file:///home/adnan/Desktop/Project/src/main/resources/templates/profile/profile.html)
-  - [`templates/student/levels.html`](file:///home/adnan/Desktop/Project/src/main/resources/templates/student/levels.html)
-  - [`templates/assessment/mcq-play.html`](file:///home/adnan/Desktop/Project/src/main/resources/templates/assessment/mcq-play.html)
+  - `src/main/resources/templates/profile/play.html`
+  - `src/main/resources/templates/profile/top.html`
+  - `src/main/resources/templates/profile/profile.html`
+  - `src/main/resources/templates/student/levels.html`
+  - `src/main/resources/templates/assessment/mcq-play.html`
 - **CSS:** `Feature 5` section at the bottom of
-  [`static/css/app.css`](file:///home/adnan/Desktop/Project/src/main/resources/static/css/app.css).
-- **Tests:** [`PlayFeatureTests.java`](file:///home/adnan/Desktop/Project/src/test/java/com/codequest/profile/PlayFeatureTests.java)
+  `src/main/resources/static/css/app.css`.
+- **Tests:** `src/test/java/com/codequest/profile/PlayFeatureTests.java`
 
 ---
 
@@ -77,7 +72,7 @@ Powers the core student gameplay loop:
 | GET | `/play/{levelId}` | Castle climb, or summit page when completed |
 | POST | `/play/{levelId}/assessments/{assessmentId}/submit` | Submit one answer |
 
-All routes require `ROLE_STUDENT` (already covered by `SecurityConfig`).
+All routes will require `ROLE_STUDENT` (to be covered by `SecurityConfig`).
 The submit form uses `th:action`, so Spring Security's CSRF token is injected automatically.
 
 ---
@@ -167,27 +162,3 @@ mvn spring-boot:run -Dspring-boot.run.profiles=test
    classroom/roster views.
 
 ---
-
-## 8. Automated Tests (14)
-
-`src/test/java/com/codequest/profile/PlayFeatureTests.java` covers:
-
-- wrong answer is stored and does not unlock the floor,
-- wrong then correct answer advances the floor (both attempts kept),
-- clearing all floors completes the castle, awards 30 points and 100%,
-- cross-floor submission is rejected,
-- post-completion submission is rejected,
-- an outsider cannot view or submit,
-- hint cost is deducted from the earned score,
-- first visit creates `LevelProgress`,
-- profile summary reflects in-progress and completed castles,
-- play page, My Castles page and Profile page render,
-- form submission redirects back to the play page,
-- summit page shows the full code,
-- wrong form submission shows an error flash message.
-
-Run only this slice:
-
-```bash
-mvn -Dtest=PlayFeatureTests test
-```

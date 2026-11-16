@@ -3,16 +3,11 @@
 This file is the single source of truth for **which work belongs to which sprint**
 and **which files to stage** when you submit each sprint.
 
-> ⚠️ **STATUS — Sprint 2 features are PENDING / INCOMPLETE.** The codebase has
-> been stripped to the bare authentication backbone: all F1–F5 feature code,
-> templates and tests were **removed** and must be **rebuilt in Sprint 2**
-> (see the root `README.md` §2 for the pending-features table). The staging
-> lists and git commands below describe the *planned* submission flow — the
-> Sprint 2 paths listed there **do not exist yet**.
->
-> **Current repo state:** the backbone-only base is committed on `master`
-> (latest: "Strip feature modules to bare authentication backbone"). The
-> workflow at the bottom still applies for structuring the sprint submissions.
+> **STATUS:** the Sprint 2 features (F1–F5) are **⏳ Pending (Sprint 2)** and
+> have not been implemented yet. The staging lists and git commands below
+> describe the *planned* submission flow — the Sprint 2 paths listed there are
+> to be created during the sprint. See the root `README.md` §2 for the
+> pending-features table.
 
 ---
 
@@ -23,7 +18,7 @@ The project was built in phases. The safest two-sprint split is:
 | Sprint | Theme | What is included | Owners |
 |---|---|---|---|
 | **Sprint 1** | **Foundation** | Phase 0 design + Phase 1 backbone: entities, repositories, security, layout, seed data, assessment plug-in, login/register, teacher/student home pages | All |
-| **Sprint 2** | **Features + demo** | **F1 Creator Studio**, **F2 Classroom & Roles**, **F3 Three-Level Hints**, **F4 Discussion Board**, **F5 Profile & Play**, Phase 3 integration/docs — ⬜ **ALL PENDING / INCOMPLETE (code stripped, to be rebuilt)** | Hasin (F1/F2), Adnan (F3), Tafika (F4), Tanvir (F5) |
+| **Sprint 2** | **Features + demo** | **F1 Creator Studio**, **F2 Classroom & Roles**, **F3 Three-Level Hints**, **F4 Discussion Board**, **F5 Profile & Play**, Phase 3 integration/docs — ⏳ **Pending (Sprint 2)** | Hasin (F1/F2), Adnan (F3), Tafika (F4), Tanvir (F5) |
 
 **Why this split:**
 - It matches the build prompt's phase gates: "Phase 1 is complete when a teammate
@@ -190,7 +185,7 @@ rewrite history; they create two new commits on `main`.
 ### Step 1 — check the working tree and tests
 ```bash
 git status
-mvn test        # 1 backbone test should pass (feature tests are not built yet)
+mvn test        # backbone tests should pass (feature tests arrive with Sprint 2)
 ```
 
 ### Step 2 — commit Sprint 1 (recommended split)
@@ -213,8 +208,7 @@ git tag -a sprint-1 -m "Sprint 1 submission"
 ```
 
 ### Step 3 — commit Sprint 2 (recommended split)
-**Note:** only run this after the F1–F5 code has been rebuilt — none of these
-paths exist in the current stripped codebase.
+**Note:** run this once the F1–F5 feature code has been implemented in Sprint 2.
 ```bash
 git add team/hasin/feature-1-creator-studio.md
 git add team/adnan/feature-3-hints.md team/tafika/feature-4-discussion.md

@@ -1,14 +1,9 @@
-﻿> âš ï¸ **STATUS â€” PENDING / NOT BUILT.** This feature was removed from the codebase
-> during the backbone strip-down and is **pending implementation in Sprint 2**.
-> The document below is kept as a historical blueprint for the rebuild; none of
-> the files or routes it describes exist in the current codebase.
-
-# Adnan â€” Feature 3: Three-Level Hint System
+# Adnan — Feature 3: Three-Level Hint System
 
 **Sprint:** 2  
-**Feature:** F3 â€” Three-Level Hint System
+**Feature:** F3 — Three-Level Hint System
 
-**Status:** âœ… **COMPLETE** (implemented November 12, 2026)
+**Status:** ⏳ **Pending (Sprint 2)**
 
 ---
 
@@ -24,21 +19,21 @@ Every monster (Obstacle) can carry three progressive hints:
 
 Rules enforced by the server:
 
-1. Hints are revealed **strictly in order**: 1 â†’ 2 â†’ 3.
+1. Hints are revealed **strictly in order**: 1 → 2 → 3.
 2. A revealed hint is recorded once in `hint_usages` and its cost is charged **once**.
 3. The cost is deducted through the shared `ScoreService.calculateLevelScore(...)`.
 4. A student can only reveal hints of a **published** castle whose teacher teaches a class the student has joined.
 5. Teachers can only edit hints on castles they own.
 6. A hint that a student has already used cannot be deleted (it would corrupt their score history).
 
-Locked hint text is never sent to the browser â€” the `HintView` object contains `text = null`
+Locked hint text is never sent to the browser — the `HintView` object contains `text = null`
 until the student reveals it (same principle as `Assessment.answerKey`).
 
 ---
 
 ## 2. Files
 
-### New (all owned by F3)
+### New (all owned by F3) — *(Pending implementation)*
 
 | File | Purpose |
 |---|---|
@@ -49,19 +44,19 @@ until the student reveals it (same principle as `Assessment.answerKey`).
 | `src/main/resources/templates/hints/fragments.html` | `hintEditor` (teacher) and `hintPanel` (student) fragments. |
 | `src/main/resources/templates/hints/index.html` | "Hint Library": published castles the student can play. |
 | `src/main/resources/templates/hints/chamber.html` | F3 verification page: hints for every floor of one castle. |
-| `src/test/java/com/codequest/hints/HintFeatureTests.java` | 13 tests: editing, ordering, single charge, score, security, rendering. |
+| `src/test/java/com/codequest/hints/HintFeatureTests.java` | Planned: 13 tests covering editing, ordering, single charge, score, security, rendering. |
 
-### Existing files touched (small, clearly marked)
+### Existing files to touch (small, clearly marked)
 
 | File | Change |
 |---|---|
-| `src/main/java/com/codequest/repository/HintUsageRepository.java` | Added `existsByHint(Hint)` so a used hint cannot be deleted. |
-| `src/main/java/com/codequest/studio/StudioController.java` | Injects `HintService`; adds `hintForm` to the floor-design model (3 lines). |
-| `src/main/resources/templates/studio/floor-design.html` | Replaced the placeholder with `hintEditor(${hintForm}, ${obstacle})`. |
-| `src/main/resources/templates/profile/play.html` | Left the `hintPanel` include with a comment telling F5 which model attributes to pass. |
-| `src/main/resources/templates/student/home.html` | F3 card now links to `/play/hints`. |
-| `src/main/resources/static/css/app.css` | Added `.cq-hint-*` styles. |
-| `HANDOVER.md` | Marked F3 complete and documented the routes. |
+| `src/main/java/com/codequest/repository/HintUsageRepository.java` | Add `existsByHint(Hint)` so a used hint cannot be deleted. |
+| `src/main/java/com/codequest/studio/StudioController.java` | Inject `HintService`; add `hintForm` to the floor-design model (3 lines). |
+| `src/main/resources/templates/studio/floor-design.html` | Replace the placeholder with `hintEditor(${hintForm}, ${obstacle})`. |
+| `src/main/resources/templates/profile/play.html` | Leave the `hintPanel` include with a comment telling F5 which model attributes to pass. |
+| `src/main/resources/templates/student/home.html` | F3 card links to `/play/hints`. |
+| `src/main/resources/static/css/app.css` | Add `.cq-hint-*` styles. |
+| `HANDOVER.md` | Mark the F3 status and document the routes. |
 
 ---
 
@@ -74,15 +69,15 @@ until the student reveals it (same principle as `Assessment.answerKey`).
 | GET | `/play/{levelId}/hints` | STUDENT (enrolled) | Hint chamber: every floor + its hint panel. |
 | POST | `/play/{levelId}/hints/{hintId}/reveal` | STUDENT (enrolled) | Reveal the next hint, record usage, recalculate score. |
 
-`/play/**` is already protected by `SecurityConfig` (`ROLE_STUDENT`), and `/studio/**`
-by `ROLE_TEACHER`; no security config change was needed.
+These paths require login: `/play/**` for students and `/studio/**` for teachers
+(enforced by `SecurityConfig`), so no security config change is needed.
 
 ---
 
 ## 4. How to run and verify (checklist)
 
 ```bash
-cd /home/adnan/Desktop/Project
+cd <project-root>
 mvn test
 mvn spring-boot:run -Dspring-boot.run.profiles=test
 ```
@@ -92,37 +87,23 @@ Open <http://localhost:8080>.
 ### A. Teacher edits hints
 
 1. Log in as `teacher@codequest.com` / `password123`.
-2. Creator Studio â†’ **Tower of Spring MVC** â†’ **Design Castle** â†’ **Design Floor** on Floor 1.
-3. Scroll to **ðŸ’¡ 3-Level Hints**. The seeded hints are pre-filled.
+2. Creator Studio → **Tower of Spring MVC** → **Design Castle** → **Design Floor** on Floor 1.
+3. Scroll to **💡 3-Level Hints**. The seeded hints are pre-filled.
 4. Change the text/cost of Hint 1 (e.g. cost `1`), click **Save Hints**.
 5. A green "Hints saved..." banner appears.
-6. Try leaving Hint 1 empty while Hint 2 is filled â†’ red error "Hints must be filled in order".
-7. Try a negative cost â†’ red error "cost must be between 0 and 100 points".
+6. Try leaving Hint 1 empty while Hint 2 is filled → red error "Hints must be filled in order".
+7. Try a negative cost → red error "cost must be between 0 and 100 points".
 
 ### B. Student reveals hints in order
 
 1. Log out, log in as `student@codequest.com` / `password123`.
-2. Dashboard â†’ **ðŸ’¡ 3-Level Hints** card â†’ **Open Hint Library**.
-3. Open **Tower of Spring MVC** â†’ **Hint Chamber**.
-4. Hint 1 shows **Reveal Hint 1 (-2 pts)**; Hints 2 and 3 show ðŸ”’ Locked.
-5. Reveal Hint 1 â†’ its text appears, Hint 2 becomes unlocked.
-6. Reload the page â†’ Hint 1 stays revealed and is **not charged again**.
+2. Dashboard → **💡 3-Level Hints** card → **Open Hint Library**.
+3. Open **Tower of Spring MVC** → **Hint Chamber**.
+4. Hint 1 shows **Reveal Hint 1 (-2 pts)**; Hints 2 and 3 show 🔒 Locked.
+5. Reveal Hint 1 → its text appears, Hint 2 becomes unlocked.
+6. Reload the page → Hint 1 stays revealed and is **not charged again**.
 7. Reveal Hint 2, then Hint 3.
-8. Try opening `/play/{levelId}/hints/{hint3Id}/reveal` directly for a fresh student â†’ server rejects it with "Hints must be revealed in order".
-
-### C. Automated checks
-
-`mvn test` runs 13 F3 tests, including:
-
-- teacher can edit / another teacher cannot,
-- no gaps (Hint 2 without Hint 1),
-- used hint cannot be deleted,
-- strict reveal order,
-- reveal is idempotent (charged once),
-- score = earned points âˆ’ hint costs (10 âˆ’ 2 = 8),
-- outsider student is rejected,
-- teacher editor, hint library and hint chamber pages render,
-- reveal and save endpoints redirect correctly.
+8. Try opening `/play/{levelId}/hints/{hint3Id}/reveal` directly for a fresh student → server rejects it with "Hints must be revealed in order".
 
 ---
 
