@@ -12,7 +12,12 @@
     <!-- Shared Navigation Bar -->
     <nav th:fragment="navbar" class="cq-navbar">
         <a th:href="@{/}" class="cq-brand">
-            🏰 <span>Code</span>Quest
+            <svg class="cq-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M4 21V9l2-3V4h2v2h2V4h2v2h2V4h2v2l2 3v12"/>
+                <path d="M4 21h16"/>
+                <path d="M10 21v-4a2 2 0 0 1 4 0v4"/>
+            </svg>
+            <span>Code</span>Quest
         </a>
 
         <div class="cq-nav-links">

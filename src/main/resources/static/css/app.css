@@ -21,6 +21,17 @@
             #1e1b4b 62%,
             #2c1d5c 82%,
             #3b2367 100%);
+    /* Subtle static grid pattern: 1px lines at ~6% white opacity, drawn
+       with repeating-linear-gradient + background-size (pure CSS, no
+       animation/JS). */
+    --grid-color: rgba(255, 255, 255, 0.06);
+    --grid-size: 32px;
+    --grid-x: repeating-linear-gradient(to right,
+            var(--grid-color) 0 1px,
+            transparent 1px var(--grid-size));
+    --grid-y: repeating-linear-gradient(to bottom,
+            var(--grid-color) 0 1px,
+            transparent 1px var(--grid-size));
 }
 
 * {
@@ -34,14 +45,18 @@ html {
 }
 
 body {
-    /* Ombre gradient: deep slate -> indigo -> soft violet.
+    /* Layered background: subtle static architectural grid lines on top of
+       the ombre gradient (deep slate -> indigo -> soft violet). Pure CSS —
+       repeating-linear-gradient + background-size, no animation, no JS.
        Fixed attachment keeps it filling the full viewport height even on
        long pages; the darkest tone stays the fallback color. */
     background-color: var(--bg-dark);
-    background-image: var(--bg-ombre);
+    background-image: var(--grid-x), var(--grid-y), var(--bg-ombre);
     background-attachment: fixed;
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
+    background-size: var(--grid-size) var(--grid-size),
+                     var(--grid-size) var(--grid-size),
+                     100% 100%;
+    background-repeat: repeat, repeat, no-repeat;
     color: var(--text-main);
     font-family: var(--font-family);
     min-height: 100vh;
@@ -58,6 +73,14 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+/* Inline monochrome line icons (Lucide-style SVGs) */
+.cq-icon {
+    width: 1.125em;
+    height: 1.125em;
+    vertical-align: -0.2em;
+    flex-shrink: 0;
 }
 
 .cq-brand {
